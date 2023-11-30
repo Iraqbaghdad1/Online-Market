@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #b0c4b1;
+}
+
+.navbar-logo img {
+  height: 40px; 
+}
+
+.navbar-links a {
+  margin-right: 40px;
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-links a:hover {
+  text-decoration: none;
+}
+
+.navbar-user {
+  color: white;
+}

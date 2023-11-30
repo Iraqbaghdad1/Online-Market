@@ -1,31 +1,27 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-require('dotenv').config();
-const userRoutes = require('./routes/userRoutes'); 
-const authRoutes = require('./routes/authRoutes');
-
 const app = express();
-const port = process.env.PORT || 5000;
-
-app.use(cors());
-app.use(express.json());
-
-// MongoDB connection
-const connectDB = require('./config/db');
-// Connect to the database
-connectDB();
-
-// Define a route for the root URL
-app.get('/', (req, res) => {
-  res.json({ message: "Welcome to Online Market Web-App" });
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
 });
+// middlewares
+const bodyParser = require('body-parser');
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+// apis
+app.get('/hello', (req, res) => { res.json({ message: 'Hello from server!' }); });
+app.use('/api/admin', require('./api/admin'));
+app.use('/api/customer', require('./api/customer'));
 
-// Routes
-app.use('/api/users', userRoutes);
-// Auth routes
-app.use('/auth', authRoutes);
-
-app.listen(port, () => {
-  console.log(`Server is running on port: ${port}`);
+// deployment
+const path = require('path');
+// '/admin' serve the files at client-admin/build/* as static files
+app.use('/admin', express.static(path.resolve(__dirname, 'client-admin/build')));
+app.get('admin/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client-admin/build', 'index.html'))
+});
+// '/' serve the files at client-customer/build/* as static files
+app.use('/', express.static(path.resolve(__dirname, 'client-user/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client-user/build', 'index.html'));
 });
