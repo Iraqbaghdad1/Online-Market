@@ -39,27 +39,55 @@ router.get('/products/:id', async function (req, res) {
   res.json(product);
 });
 // customer
+// router.post('/signup', async function (req, res) {
+//   const username = req.body.username;
+//   const password = req.body.password;
+//   const name = req.body.name;
+//   const phone = req.body.phone;
+//   const email = req.body.email;
+//   const dbCust = await CustomerDAO.selectByUsernameOrEmail(username, email);
+//   if (dbCust) {
+//     res.json({ success: false, message: 'Exists username or email' });
+//   } else {
+//     const now = new Date().getTime(); // milliseconds
+//     const token = CryptoUtil.md5(now.toString());
+//     const newCust = { username: username, password: password, name: name, phone: phone, email: email, active: 0, token: token };
+//     const result = await CustomerDAO.insert(newCust);
+//     if (result) {
+//       const send = await EmailUtil.send(email, result._id, token);
+//       if (send) {
+//         res.json({ success: true, message: 'Please check email' });
+//       } else {
+//         res.json({ success: false, message: 'Email failure' });
+//       }
+//     } else {
+//       res.json({ success: false, message: 'Insert failure' });
+//     }
+//   }
+// });
+
 router.post('/signup', async function (req, res) {
   const username = req.body.username;
   const password = req.body.password;
   const name = req.body.name;
   const phone = req.body.phone;
   const email = req.body.email;
+
   const dbCust = await CustomerDAO.selectByUsernameOrEmail(username, email);
+
   if (dbCust) {
     res.json({ success: false, message: 'Exists username or email' });
   } else {
     const now = new Date().getTime(); // milliseconds
     const token = CryptoUtil.md5(now.toString());
-    const newCust = { username: username, password: password, name: name, phone: phone, email: email, active: 0, token: token };
+
+    const newCust = { username, password, name, phone, email, active: 0, token };
+
     const result = await CustomerDAO.insert(newCust);
+
     if (result) {
-      const send = await EmailUtil.send(email, result._id, token);
-      if (send) {
-        res.json({ success: true, message: 'Please check email' });
-      } else {
-        res.json({ success: false, message: 'Email failure' });
-      }
+      // Replace email sending with an alert message -  that's not working for now
+      res.json({ success: true, message: 'Signup successful. Please wait for admin approval.' });
     } else {
       res.json({ success: false, message: 'Insert failure' });
     }

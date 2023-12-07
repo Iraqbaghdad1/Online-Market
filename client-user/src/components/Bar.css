@@ -1,10 +1,9 @@
-/* Bar.css */
 .main-div {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #b0c4b1; /* Adjust the background color as needed */
-  padding: 10px 20px;
+  background-color: #8b9dc3; 
+  padding: 15px 20px; 
 }
 
 .float-left,
@@ -15,25 +14,30 @@
 
 .float-left div,
 .float-right div {
-  margin: 0 10px; /* Add spacing around the divs */
+  margin: 0 15px; 
 }
 
 .float-left a,
 .float-right a {
   display: inline-block;
-  padding: 8px 15px;
-  margin: 0 5px;
+  padding: 12px 20px; 
+  margin: 0 8px;
   text-decoration: none;
-  color: #333; /* Adjust text color as needed */
-  border: 2px solid #333; /* Adjust border color as needed */
-  border-radius: 15px; /* Rounded corners */
+  color: white;
+  background-color: #333; 
+  border: 2px solid #333;
+  border-radius: 20px; 
   transition: all 0.3s ease;
 }
 
 .float-left a:hover,
 .float-right a:hover {
-  background-color: #333; /* Adjust hover background color as needed */
-  color: white; /* Adjust text hover color as needed */
+  background-color: #555;
+}
+
+.float-right b {
+  font-weight: bold;
+  color: #fff; 
 }
 
 .float-clear {

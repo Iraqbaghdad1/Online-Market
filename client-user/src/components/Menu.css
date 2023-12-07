@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #b0c4b1;
+  background-color: #3b5998; 
   padding: 10px 20px;
 }
 
@@ -22,14 +22,14 @@
 .menu li a {
   color: white;
   text-decoration: none;
+  font-size: 16px; 
 }
 
 .menu li a:hover {
-  color: #ddd; 
-  text-decoration: underline;
+  color: #ddd;
+  text-decoration: none; 
 }
 
-/* Logo Style */
 .navbar-logo {
   display: flex;
   align-items: center;
@@ -37,25 +37,26 @@
 }
 
 .navbar-logo img {
-  height: 50px; 
-  margin-right: 20px; 
+  height: 60px;
+  margin-right: 20px;
 }
 
 .search {
   display: flex;
   align-items: center;
+  width: 20%;
 }
 
 .search input[type="search"] {
-  padding: 5px;
-  margin-right: 5px;
-  border: none;
+  padding: 8px;
+  margin-right: 8px;
+  border: 1px solid #ddd; 
   border-radius: 4px;
 }
 
 .search input[type="submit"] {
-  padding: 5px 10px;
-  background-color: #555;
+  padding: 8px 15px;
+  background-color: #4caf50; 
   color: white;
   border: none;
   cursor: pointer;
@@ -63,5 +64,5 @@
 }
 
 .search input[type="submit"]:hover {
-  background-color: #666;
+  background-color: #45a049; 
 }

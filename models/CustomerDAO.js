@@ -19,6 +19,12 @@ const CustomerDAO = {
     const result = await Models.Customer.findOneAndUpdate(query, newvalues, { new: true });
     return result;
   },
+  async status(_id, token, status) {
+    const query = { _id: _id, token: token };
+    const newvalues = { active: status };
+    const result = await Models.Customer.findOneAndUpdate(query, newvalues, { new: true });
+    return result;
+  },
   async selectByUsernameAndPassword(username, password) {
     const query = { username: username, password: password };
     const customer = await Models.Customer.findOne(query);

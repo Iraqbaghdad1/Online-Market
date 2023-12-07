@@ -9,7 +9,7 @@ import Product from './ProductComponent';
 import Order from './OrderComponent';
 import Customer from './CustomerComponent';
 import './Page.css';
-import banner from './images/admin-banner.jpg';
+// import banner from './images/admin-banner.jpg';
 
 
 class Main extends Component {
@@ -20,13 +20,12 @@ class Main extends Component {
         <div className="body-admin">
           <Menu />
           <Routes>
-            <Route path='/admin' element={<Navigate replace to='/admin/home' />} />
+            <Route path='/admin/order' element={<Order />} />
+            <Route path='/admin' element={<Navigate replace to='/admin/order'/>} />
             <Route path='/admin/category' element={<Category />} />
             <Route path='/admin/product' element={<Product />} />
-            <Route path='/admin/order' element={<Order />} />
             <Route path='/admin/customer' element={<Customer />} />
           </Routes>
-          <img src={banner} alt="Admin Banner" className="admin-banner" />
         </div>
       );
     }

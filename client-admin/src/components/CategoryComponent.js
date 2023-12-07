@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
 import CategoryDetail from './CategoryDetailComponent';
+import './Category.css';
 
 class Category extends Component {
   static contextType = MyContext; // using this.context to access global state
@@ -13,31 +14,22 @@ class Category extends Component {
     };
   }
   render() {
-    const cates = this.state.categories.map((item) => {
-      return (
-        <tr key={item._id} className="datatable" onClick={() => this.trItemClick(item)}>
-          <td>{item._id}</td>
-          <td>{item.name}</td>
-        </tr>
-      );
-    });
+    const categoriesList = this.state.categories.map((item) => (
+      <div key={item._id} className="category-card" onClick={() => this.trItemClick(item)}>
+        <h3>{item.name}</h3>
+        <p>ID: {item._id}</p>
+      </div>
+    ));
+
     return (
-      <div>
-        <div className="float-left">
+      <div className="category-page">
+        <div className="category-list">
           <h2 className="text-center">CATEGORY LIST</h2>
-          <table className="datatable" border="1">
-            <tbody>
-              <tr className="datatable">
-                <th>ID</th>
-                <th>Name</th>
-              </tr>
-              {cates}
-            </tbody>
-          </table>
+          <div className="category-cards-container">{categoriesList}</div>
         </div>
-        <div className="inline" />
-        <CategoryDetail item={this.state.itemSelected} updateCategories={this.updateCategories} />
-        <div className="float-clear" />
+        <div className="category-form">
+          <CategoryDetail item={this.state.itemSelected} updateCategories={this.updateCategories} />
+        </div>
       </div>
     );
   }

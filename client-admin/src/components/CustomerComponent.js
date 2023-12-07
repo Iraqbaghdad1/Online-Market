@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
+import './Customer.css';
 
 class Customer extends Component {
   static contextType = MyContext; // using this.context to access global state
@@ -13,25 +14,26 @@ class Customer extends Component {
     };
   }
   render() {
-    const customers = this.state.customers.map((item) => {
-      return (
-        <tr key={item._id} className="datatable" onClick={() => this.trCustomerClick(item)}>
-          <td>{item._id}</td>
-          <td>{item.username}</td>
-          <td>{item.password}</td>
-          <td>{item.name}</td>
-          <td>{item.phone}</td>
-          <td>{item.email}</td>
-          <td>{item.active}</td>
-          <td>
-            {item.active === 0 ?
-              <span className="link" onClick={() => this.lnkEmailClick(item)}>EMAIL</span>
-              :
-              <span className="link" onClick={() => this.lnkDeactiveClick(item)}>DEACTIVE</span>}
-          </td>
-        </tr>
-      );
-    });
+    const customerCards = this.state.customers.map((item) => (
+      <div key={item._id} className="customer-card" onClick={() => this.trCustomerClick(item)}>
+        <h3>{item.name}</h3>
+        <p>Username: {item.username}</p>
+        <p>Email: {item.email}</p>
+        <p>Phone: {item.phone}</p>
+        <p>Active: {item.active}</p>
+        <div className="action-buttons">
+          {item.active === 0 ? (
+            <button className="link action-button" onClick={() => this.lnkActiveClick(item)}>
+              ACTIVATE
+            </button>
+          ) : (
+            <button className="link action-button" onClick={() => this.lnkDeActiveClick(item)}>
+              DEACTIVATE
+            </button>
+          )}
+        </div>
+      </div>
+    ));
     const orders = this.state.orders.map((item) => {
       return (
         <tr key={item._id} className="datatable" onClick={() => this.trOrderClick(item)}>
@@ -61,24 +63,7 @@ class Customer extends Component {
     }
     return (
       <div>
-        <div className="align-center">
-          <h2 className="text-center">CUSTOMER LIST</h2>
-          <table className="datatable" border="1">
-            <tbody>
-              <tr className="datatable">
-                <th>ID</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Active</th>
-                <th>Action</th>
-              </tr>
-              {customers}
-            </tbody>
-          </table>
-        </div>
+        <div className="customer-cards-container">{customerCards}</div>
         {this.state.orders.length > 0 ?
           <div className="align-center">
             <h2 className="text-center">ORDER LIST</h2>
@@ -130,12 +115,18 @@ class Customer extends Component {
   trOrderClick(item) {
     this.setState({ order: item });
   }
-  lnkDeactiveClick(item) {
-    this.apiPutCustomerDeactive(item._id, item.token);
+
+  lnkDeActiveClick(item) {
+    const newActiveStatus = 0;
+    this.apiPutCustomerStatus(item._id, item.token, newActiveStatus);
   }
-  lnkEmailClick(item) {
-    this.apiGetCustomerSendmail(item._id);
+
+  lnkActiveClick(item) {
+    const newActiveStatus = 1;
+    this.apiPutCustomerStatus(item._id, item.token, newActiveStatus);
   }
+
+
   // apis
   apiGetCustomers() {
     const config = { headers: { 'x-access-token': this.context.token } };
@@ -151,24 +142,48 @@ class Customer extends Component {
       this.setState({ orders: result });
     });
   }
-  apiPutCustomerDeactive(id, token) {
-    const body = { token: token };
+
+  apiPutCustomerStatus(id, token, newActiveStatus) {
+    const body = { active: newActiveStatus, token:token };  // Removed token from the body
     const config = { headers: { 'x-access-token': this.context.token } };
-    axios.put('/api/admin/customers/deactive/' + id, body, config).then((res) => {
-      const result = res.data;
-      if (result) {
-        this.apiGetCustomers();
-      } else {
-        alert('Error! An error occurred. Please try again later.');
-      }
-    });
+
+    axios.put('/api/admin/customers/status/'+id, body, config)
+      .then((res) => {
+        const result = res.data;
+        if (result) {
+          alert('Status updated successfully!');
+          this.apiGetCustomers();
+        } else {
+          alert('Error! An error occurred. Please try again later.');
+          console.log(result);
+        }
+      })
+      .catch((error) => {
+        console.error('API error:', error);
+        console.log(error);
+        alert('Error! An unexpected error occurred. Please try again later.');
+      });
   }
-  apiGetCustomerSendmail(id) {
-    const config = { headers: { 'x-access-token': this.context.token } };
-    axios.get('/api/admin/customers/sendmail/' + id, config).then((res) => {
-      const result = res.data;
-      alert(result.message);
-    });
-  }
+
+  // apiPutCustomerStatus(id, token, newActiveStatus) {
+  //   const body = { token: token, active: newActiveStatus };
+  //   const config = { headers: { 'x-access-token': this.context.token } };
+
+  //   axios.put('/api/admin/customers/status/' + id, body, config)
+  //     .then((res) => {
+  //       const result = res.data;
+  //       if (result) {
+  //         alert('Status updated successfully!');
+  //         this.apiGetCustomers();
+  //       } else {
+  //         alert('Error! An error occurred. Please try again later.');
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('API error:', error);
+  //       alert('Error! An unexpected error occurred. Please try again later.');
+  //     });
+  // }
+
 }
 export default Customer;

@@ -15,7 +15,7 @@ const OrderDAO = {
   },
   async selectAll() {
     const query = {};
-    const mysort = { cdate: -1 }; // descending
+    const mysort = { cdate: -1 };
     const orders = await Models.Order.find(query).sort(mysort).exec();
     return orders;
   },

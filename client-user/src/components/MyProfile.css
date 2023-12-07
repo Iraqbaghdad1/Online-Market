@@ -6,16 +6,15 @@ body {
       #84ffc9,
       #aab2ff,
       #eca0ff
-    ); /* Gradient background */
+    ); 
   }
   
   .login-container {
-    padding: 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 80vh; 
+    height: 80vh;
   }
   
   .text-center {
@@ -25,9 +24,9 @@ body {
   
   .check-in {
     width: 500px;
+    background: #0096c7;
     border-radius: 10%;
     padding: 1%;
-    background: #6d8ea0;
   }
   
   .form-group {
@@ -37,14 +36,14 @@ body {
   .center-button {
     margin-bottom: 15px;
     display: flex;
-    justify-content: center;
+    justify-content: center; 
   }
   
   label {
     display: block;
     margin-bottom: 5px;
     padding: auto;
-    color: #023047;
+    color: #023047; 
   }
   
   input {
@@ -62,8 +61,8 @@ body {
     border-bottom-color: #ecf0f1; 
   }
   
-  #login-button {
-    background: #27ae60; 
+  #update-button {
+    background: #27ae60;
     color: white;
     padding: 10px;
     width: 30%;
@@ -74,6 +73,6 @@ body {
   }
   
   #login-button:hover {
-    background: #219653; 
+    background: #219653;
   }
   

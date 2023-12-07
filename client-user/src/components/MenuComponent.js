@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import withRouter from '../utils/withRouter';
 import './Menu.css';
-import logoImage from './images/logo.png';
+import logoImage from './images/logo0.png';
 
 
 class Menu extends Component {

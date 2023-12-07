@@ -5,7 +5,7 @@ import withRouter from '../utils/withRouter';
 import './Login.css';
 
 class Login extends Component {
-  static contextType = MyContext; 
+  static contextType = MyContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -15,25 +15,24 @@ class Login extends Component {
   }
   render() {
     return (
-      <div className="align-center">
+      <div className="login-container">
         <h2 className="text-center">CUSTOMER LOGIN</h2>
-        <form>
-          <table className="align-center">
-            <tbody>
-              <tr>
-                <td>Username</td>
-                <td><input type="text" value={this.state.txtUsername} onChange={(e) => { this.setState({ txtUsername: e.target.value }) }} /></td>
-              </tr>
-              <tr>
-                <td>Password</td>
-                <td><input type="password" value={this.state.txtPassword} onChange={(e) => { this.setState({ txtPassword: e.target.value }) }} /></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td><input id="button" type="submit" value="LOGIN" onClick={(e) => this.btnLoginClick(e)} /></td>
-              </tr>
-            </tbody>
-          </table>
+        <form className='check-in'>
+          <div className="form-group">
+            <label className="text-center" htmlFor="username">Username</label>
+            <div className="center-button">
+            <input type="text" id="username" value={this.state.txtUsername} onChange={(e) => { this.setState({ txtUsername: e.target.value }) }} />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="text-center" htmlFor="password">Password</label>
+            <div className="center-button">
+            <input type="password" id="password" value={this.state.txtPassword} onChange={(e) => { this.setState({ txtPassword: e.target.value }) }} />
+            </div>
+          </div>
+          <div className="form-group center-button">
+            <input id="login-button" type="submit" value="LOGIN" onClick={(e) => this.btnLoginClick(e)} />
+          </div>
         </form>
       </div>
     );

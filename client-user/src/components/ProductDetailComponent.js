@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
 import withRouter from '../utils/withRouter';
+import './ProductView.css';
 
 class ProductDetail extends Component {
   static contextType = MyContext;
@@ -16,48 +17,48 @@ class ProductDetail extends Component {
     const prod = this.state.product;
     if (prod != null) {
       return (
-        <div className="align-center">
-          <h2 className="text-center">PRODUCT DETAILS</h2>
-          <figure className="caption-right">
-            <img src={"data:image/jpg;base64," + prod.image} width="400px" height="400px" alt="" />
-            <figcaption>
-              <form>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td align="right">ID:</td>
-                      <td>{prod._id}</td>
-                    </tr>
-                    <tr>
-                      <td align="right">Name:</td>
-                      <td>{prod.name}</td>
-                    </tr>
-                    <tr>
-                      <td align="right">Price:</td>
-                      <td>{prod.price}</td>
-                    </tr>
-                    <tr>
-                      <td align="right">Category:</td>
-                      <td>{prod.category.name}</td>
-                    </tr>
-                    <tr>
-                      <td align="right">Quantity:</td>
-                      <td><input type="number" min="1" max="99" value={this.state.txtQuantity} onChange={(e) => { this.setState({ txtQuantity: e.target.value }) }} /></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td><input type="submit" value="ADD TO CART" onClick={(e) => this.btnAdd2CartClick(e)} /></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </form>
-            </figcaption>
-          </figure>
+        <div className="product-details-container-view">
+          <div className="product-image-container-view">
+            <img className="product-image-view" src={"data:image/jpg;base64," + prod.image} alt={prod.name} />
+          </div>
+          <div className="product-info-container-view">
+            <h2 className="product-title-view">{prod.name}</h2>
+            <form className="product-form-view">
+              <div className="form-group-view">
+                <label>ID:</label>
+                <span>{prod._id}</span>
+              </div>
+              <div className="form-group-view">
+                <label>Price:</label>
+                <h3>{prod.price}</h3>
+              </div>
+              <div className="form-group-view">
+                <label>Category:</label>
+                <h4>{prod.category.name}</h4>
+              </div>
+              <div className="form-group-view">
+                <label>Quantity:</label>
+                <input
+                  type="number"
+                  className="quantity-input-view"
+                  min="1"
+                  max="99"
+                  value={this.state.txtQuantity}
+                  onChange={(e) => this.setState({ txtQuantity: e.target.value })}
+                />
+              </div>
+              <div className="form-group-view">
+                <button className="add-to-cart-btn-view" onClick={(e) => this.btnAdd2CartClick(e)}>ADD TO CART</button>
+              </div>
+            </form>
+          </div>
         </div>
       );
     }
     return (<div />);
   }
+
+
   componentDidMount() {
     const params = this.props.params;
     this.apiGetProduct(params.id);

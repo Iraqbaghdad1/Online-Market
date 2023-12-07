@@ -37,7 +37,7 @@ const ProductDAO = {
   },
   async selectTopNew(top) {
     const query = {};
-    const mysort = { cdate: -1 }; // descending
+    const mysort = { cdate: -1 }; 
     const products = await Models.Product.find(query).sort(mysort).limit(top).exec();
     return products;
   },
@@ -46,7 +46,7 @@ const ProductDAO = {
       { $match: { status: 'APPROVED' } },
       { $unwind: '$items' },
       { $group: { _id: '$items.product._id', sum: { $sum: '$items.quantity' } } },
-      { $sort: { sum: -1 } }, // descending
+      { $sort: { sum: -1 } }, 
       { $limit: top }
     ]).exec();
     var products = [];

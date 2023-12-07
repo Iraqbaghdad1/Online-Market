@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
+import './Order.css';
 
 class Order extends Component {
   static contextType = MyContext; // using this.context to access global state
@@ -12,76 +13,53 @@ class Order extends Component {
     };
   }
   render() {
-    const orders = this.state.orders.map((item) => {
-      return (
-        <tr key={item._id} className="datatable" onClick={() => this.trItemClick(item)}>
-          <td>{item._id}</td>
-          <td>{new Date(item.cdate).toLocaleString()}</td>
-          <td>{item.customer.name}</td>
-          <td>{item.customer.phone}</td>
-          <td>{item.total}</td>
-          <td>{item.status}</td>
-          <td>
-            {item.status === 'PENDING' ?
-              <div><span className="link" onClick={() => this.lnkApproveClick(item._id)}>APPROVE</span> || <span className="link" onClick={() => this.lnkCancelClick(item._id)}>CANCEL</span></div>
-              : <div />}
-          </td>
-        </tr>
-      );
-    });
-    if (this.state.order) {
-      var items = this.state.order.items.map((item, index) => {
-        return (
-          <tr key={item.product._id} className="datatable">
-            <td>{index + 1}</td>
-            <td>{item.product._id}</td>
-            <td>{item.product.name}</td>
-            <td><img src={"data:image/jpg;base64," + item.product.image} width="70px" height="70px" alt="" /></td>
-            <td>{item.product.price}</td>
-            <td>{item.quantity}</td>
-            <td>{item.product.price * item.quantity}</td>
-          </tr>
-        );
-      });
-    }
-    return (
-      <div>
-        <div className="align-center">
-          <h2 className="text-center">ORDER LIST</h2>
-          <table className="datatable" border="1">
-            <tbody>
-              <tr className="datatable">
-                <th>ID</th>
-                <th>Creation date</th>
-                <th>Cust.name</th>
-                <th>Cust.phone</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-              {orders}
-            </tbody>
-          </table>
-        </div>
-        {this.state.order ?
-          <div className="align-center">
-            <h2 className="text-center">ORDER DETAIL</h2>
-            <table className="datatable" border="1">
-              <tbody>
-                <tr className="datatable">
-                  <th>No.</th>
-                  <th>Prod.ID</th>
-                  <th>Prod.name</th>
-                  <th>Image</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Amount</th>
-                </tr>
-                {items}
-              </tbody>
-            </table>
+    const orderCards = this.state.orders.map((item) => (
+      <div key={item._id} className="order-card" onClick={() => this.trItemClick(item)}>
+        <h3>Order ID: {item._id}</h3>
+        <p>Creation Date: {new Date(item.cdate).toLocaleString()}</p>
+        <p>Customer Name: {item.customer.name}</p>
+        <p>Customer Phone: {item.customer.phone}</p>
+        <p>Total: {item.total}</p>
+        <p>Status: <button id="status-button-order" disabled>{item.status}</button></p>
+        {item.status === 'PENDING' && (
+          <div className="action-buttons">
+            <button id="approve-btn" className="link" onClick={() => this.lnkApproveClick(item._id)}>
+              APPROVE
+            </button>{' '}
+            <button id="cancel-btn" className="link" onClick={() => this.lnkCancelClick(item._id)}>
+              CANCEL
+            </button>
           </div>
-          : <div />}
+        )}
+      </div>
+    ));
+
+    const items =
+      this.state.order &&
+      this.state.order.items.map((item, index) => (
+        <div key={item.product._id} className="order-item">
+          <p>No.: {index + 1}</p>
+          <p>Product ID: {item.product._id}</p>
+          <p>Product Name: {item.product.name}</p>
+          <img src={`data:image/jpg;base64,${item.product.image}`} width="70px" height="70px" alt="" />
+          <p>Price: {item.product.price}</p>
+          <p>Quantity: {item.quantity}</p>
+          <p>Amount: {item.product.price * item.quantity}</p>
+        </div>
+      ));
+
+    return (
+      <div className="order-page-container">
+        <div className="order-cards-container">
+          <h2 className="text-center">ORDERS</h2>
+          {orderCards}
+        </div>
+        {this.state.order && (
+          <div className="order-details-container">
+            <h2 className="text-center">ORDER DETAIL</h2>
+            <div className="order-items-container">{items}</div>
+          </div>
+        )}
       </div>
     );
   }

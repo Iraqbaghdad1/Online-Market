@@ -1,0 +1,45 @@
+
+.customer-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.customer-card {
+  background-color: #f0f0f0;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 23%;
+  align-items: center;
+  margin: 40px;
+  box-sizing: border-box;
+}
+
+.customer-card:hover {
+  background-color: #e0e0e0;
+}
+
+.action-buttons {
+  margin-top: 10px;
+}
+
+
+.action-button {
+  background: #38a3a5;
+  color: black;
+  padding: 10px;
+  width: 100px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+}
+
+.action-button:hover {
+  background: #22577a;
+  color: white;
+}

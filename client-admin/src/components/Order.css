@@ -1,0 +1,112 @@
+.order-page-container {
+  display: flex;
+}
+
+.order-cards-container {
+  flex: 1;
+  padding: 20px;
+}
+
+.order-details-container {
+  flex: 1;
+  padding: 20px;
+  background: #cfb9a5;
+}
+
+
+.order-card {
+  border: 5px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  background: #84a59d;
+  width: 70%;
+}
+
+.order-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-card h3 {
+  margin-bottom: 10px;
+}
+
+.order-card p {
+  margin: 5px 0;
+}
+
+.action-buttons {
+  margin-top: 10px;
+}
+
+.order-items-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap:10px;
+}
+
+.order-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px;
+  transition: transform 0.3s ease;
+  width: 60%;
+  background: #84a59d;
+}
+
+.order-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-item p {
+  margin: 5px 0;
+}
+
+
+#approve-btn {
+  background: #27ae60;
+  color: white;
+  padding: 10px;
+  width: 30%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+}
+
+#approve-btn :hover {
+  background: #219653;
+}
+
+#cancel-btn {
+  background: #ef233c;
+  color: white;
+  padding: 10px;
+  width: 30%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+}
+
+#cancel-btn:hover {
+  background: #d90429;
+}
+
+#status-button-order {
+  background-color: #40916c; 
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}

@@ -115,6 +115,15 @@ router.get('/customers', JwtUtil.checkToken, async function (req, res) {
   const customers = await CustomerDAO.selectAll();
   res.json(customers);
 });
+
+router.put('/customers/status/:id', JwtUtil.checkToken, async function (req, res) {
+  const _id = req.params.id;
+  const token = req.body.token;
+  const active = req.body.active;
+  const result = await CustomerDAO.status(_id, token, active);
+  res.json(result);
+});
+
 router.put('/customers/deactive/:id', JwtUtil.checkToken, async function (req, res) {
   const _id = req.params.id;
   const token = req.body.token;

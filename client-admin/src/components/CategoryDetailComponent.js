@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
+import './CategoryDetail.css';
+
 
 class CategoryDetail extends Component {
   static contextType = MyContext; // using this.context to access global state
@@ -10,32 +12,42 @@ class CategoryDetail extends Component {
       txtID: '',
       txtName: ''
     };
+    // Bind event handler methods in the constructor
+    this.btnAddClick = this.btnAddClick.bind(this);
+    this.btnUpdateClick = this.btnUpdateClick.bind(this);
+    this.btnDeleteClick = this.btnDeleteClick.bind(this);
   }
   render() {
     return (
-      <div className="float-right">
+      <div className="category-detail-form">
         <h2 className="text-center">CATEGORY DETAIL</h2>
-        <form>
-          <table>
-            <tbody>
-              <tr>
-                <td>ID</td>
-                <td><input type="text" value={this.state.txtID} onChange={(e) => { this.setState({ txtID: e.target.value }) }} readOnly={true} /></td>
-              </tr>
-              <tr>
-                <td>Name</td>
-                <td><input type="text" value={this.state.txtName} onChange={(e) => { this.setState({ txtName: e.target.value }) }} /></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  <input type="submit" value="ADD NEW" onClick={(e) => this.btnAddClick(e)} />
-                  <input type="submit" value="UPDATE" onClick={(e) => this.btnUpdateClick(e)} />
-                  <input type="submit" value="DELETE" onClick={(e) => this.btnDeleteClick(e)} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <form className="cat-form" onSubmit={this.handleSubmit}>
+          <div className="cat-form-group">
+            <label htmlFor="txtID">ID</label>
+            <input
+              className="cat-form-input"
+              type="text"
+              id="txtID"
+              value={this.state.txtID}
+              onChange={(e) => this.handleChange(e, 'txtID')}
+              readOnly
+            />
+          </div>
+          <div className="cat-form-group">
+            <label htmlFor="txtName">Name</label>
+            <input
+              className="prod-cat-form-input"
+              type="text"
+              id="txtName"
+              value={this.state.txtName}
+              onChange={(e) => this.handleChange(e, 'txtName')}
+            />
+          </div>
+          <div className="cat-form-group">
+            <input className="cat-btn" type="submit" value="ADD NEW" onClick={this.btnAddClick} />
+            <input className="cat-btn" type="submit" value="UPDATE" onClick={this.btnUpdateClick} />
+            <input className="cat-btn" id="delete" type="submit" value="DELETE" onClick={this.btnDeleteClick} />
+          </div>
         </form>
       </div>
     );
@@ -45,9 +57,13 @@ class CategoryDetail extends Component {
       this.setState({ txtID: this.props.item._id, txtName: this.props.item.name });
     }
   }
+  handleChange(e, fieldName) {
+    this.setState({ [fieldName]: e.target.value });
+  }
   // event-handlers
   btnAddClick(e) {
     e.preventDefault();
+    console.log(this.state.txtName);
     const name = this.state.txtName;
     if (name) {
       const cate = { name: name };

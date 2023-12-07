@@ -3,50 +3,34 @@ import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
 import CartUtil from '../utils/CartUtil';
 import withRouter from '../utils/withRouter';
+import './MyCart.css'; 
 
 class Mycart extends Component {
   static contextType = MyContext; // using this.context to access global state
+
   render() {
-    const mycart = this.context.mycart.map((item, index) => {
-      return (
-        <tr key={item.product._id} className="datatable">
-          <td>{index + 1}</td>
-          <td>{item.product._id}</td>
-          <td>{item.product.name}</td>
-          <td>{item.product.category.name}</td>
-          <td><img src={"data:image/jpg;base64," + item.product.image} width="70px" height="70px" alt="" /></td>
-          <td>{item.product.price}</td>
-          <td>{item.quantity}</td>
-          <td>{item.product.price * item.quantity}</td>
-          <td><span className="link" onClick={() => this.lnkRemoveClick(item.product._id)}>Remove</span></td>
-        </tr>
-      );
-    });
+    const mycart = this.context.mycart.map((item, index) => (
+      <div key={item.product._id} className="card">
+        <img src={`data:image/jpg;base64,${item.product.image}`} alt={item.product.name} />
+        <div className="card-details">
+          <h3>{item.product.name}</h3>
+          <p>Category: {item.product.category.name}</p>
+          <p>Price: {item.product.price}</p>
+          <p>Quantity: {item.quantity}</p>
+          <p>Total: {item.product.price * item.quantity}</p>
+          <span className="link" onClick={() => this.lnkRemoveClick(item.product._id)}>Remove</span>
+        </div>
+      </div>
+    ));
+
     return (
       <div className="align-center">
         <h2 className="text-center">ITEM LIST</h2>
-        <table className="datatable" border="1">
-          <tbody>
-            <tr className="datatable">
-              <th>No.</th>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Image</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Amount</th>
-              <th>Action</th>
-            </tr>
-            {mycart}
-            <tr>
-              <td colSpan="6"></td>
-              <td>Total</td>
-              <td>{CartUtil.getTotal(this.context.mycart)}</td>
-              <td><span className="link" onClick={() => this.lnkCheckoutClick()}>CHECKOUT</span></td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="card-container">{mycart}</div>
+        <div className="total-container">
+          <div className="total">Total: <b>{CartUtil.getTotal(this.context.mycart)}</b></div>
+          <button className="checkout-button" onClick={() => this.lnkCheckoutClick()}>CHECKOUT</button>
+        </div>
       </div>
     );
   }
